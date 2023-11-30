@@ -1,0 +1,67 @@
+#ifndef ORGOMGC4IDOMAIN_MODELNAVIGATION_DOMAINREPORTINGDEFVAR
+#define ORGOMGC4IDOMAIN_MODELNAVIGATION_DOMAINREPORTINGDEFVAR
+#include "org__omg__c4i__Domain_Model__Navigation_Domain.idl"
+
+module org
+{
+
+  module omg
+  {
+
+    module c4i
+    {
+
+      module Domain_Model
+      {
+
+        module Navigation_Domain
+        {
+
+          // This package contains classes that provide a common abstraction for the reporting
+          // of navigation information. 
+          module Reporting
+          {
+
+            // A sequence type, to represent multiple values.
+            typedef sequence<org::omg::c4i::Domain_Model::Navigation_Domain::navigation_derivation_kind_type, 6> navigation_report_composite_contributors_type;
+
+            // A string type
+            // Typdef for bounded string type for attribute specific_system of class navigation_report_type.
+            typedef string<32> navigation_report_specific_system_type;
+
+            // Enumeration of specialisations options for keys to classes based on generalisation navigation_report_type.
+            enum navigation_report_key_kind_type
+            {
+              // The literal for referencing the attitude_rotation_type specialisation of navigation_report_type.
+              ATTITUDE_ROTATION,
+              // The literal for referencing the attitude_rotation_rate_type specialisation of navigation_report_type.
+              ATTITUDE_ROTATION_RATE,
+              // The literal for referencing the position_offset_type specialisation of navigation_report_type.
+              POSITION_OFFSET,
+              // The literal for referencing the velocity_offset_type specialisation of navigation_report_type.
+              VELOCITY_OFFSET,
+              // The literal for referencing the depth_report_type specialisation of navigation_report_type.
+              DEPTH_REPORT,
+              // The literal for referencing the own_position_type specialisation of navigation_report_type.
+              OWN_POSITION,
+              // The literal for referencing the own_velocity_type specialisation of navigation_report_type.
+              OWN_VELOCITY,
+              // The literal for referencing the own_acceleration_type specialisation of navigation_report_type.
+              OWN_ACCELERATION
+            };
+
+            // This class is used in service selection to specify the type of navigation report
+            // being requested. Its implementation is determined by the PSM mapping.
+            // This struct contains an attribute which is an enumeration over all the specialisations of navigation_report_type.
+            struct navigation_report_kind_type
+            {
+              navigation_report_key_kind_type key_kind;
+            };
+
+          };
+        };
+      };
+    };
+  };
+};
+#endif

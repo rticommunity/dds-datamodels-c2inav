@@ -1,0 +1,127 @@
+#ifndef ORGOMGC4IDOMAIN_MODELNAVIGATION_DOMAINDEFVAR
+#define ORGOMGC4IDOMAIN_MODELNAVIGATION_DOMAINDEFVAR
+#include "Coordinates_and_Positions.idl"
+
+module org
+{
+
+  module omg
+  {
+
+    module c4i
+    {
+
+      module Domain_Model
+      {
+
+        // This package contains the Domain Models for the Navigation services. It is
+        // organised according to functionality: i.e. the modelling of attitude (the
+        // orientation and offset of the platform relative to its reported position), the
+        // platform's position (including velocity and acceleration), the depth of water the
+        // platform may be in and the reporting of this information. 
+        module Navigation_Domain
+        {
+
+          // The set of methods describing the provenance of the accuracy values
+          enum accuracy_derivation_type
+          {
+            // The values have been set using engineering judgement.
+            ESTIMATED,
+            // The accuracy values have been calibrated using real data to derive fixed accuracy
+            // values for particular instruments.
+            STATICALLY_CALIBRATED,
+            // The accuracy values have been calibrated using real data to derive accuracy
+            // values for particular instruments given particular environmental conditions -
+            // i.e. accuracy values will in general vary over time for the same set of
+            // instruments.
+            DYNAMICALLY_CALIBRATED,
+            // The accuracy values have been measured using some dynamic process that is able to
+            // estimate the current performance of the instruments in use.
+            MEASURED
+          };
+
+          // Enumeration of specialisations options for union class navigation_accuracy_type.
+          enum navigation_accuracy_kind_type
+          {
+            // attitude_rotation_accuracy_type option for 
+            ATTITUDE_ROTATION_ACCURACY_KIND,
+            // attitude_rotation_rate_accuracy_type option for 
+            ATTITUDE_ROTATION_RATE_ACCURACY_KIND,
+            // position_offset_accuracy_type option for 
+            POSITION_OFFSET_ACCURACY_KIND,
+            // velocity_offset_accuracy_type option for 
+            VELOCITY_OFFSET_ACCURACY_KIND,
+            // depth_accuracy_type option for 
+            DEPTH_ACCURACY_KIND,
+            // own_position_accuracy_type option for 
+            OWN_POSITION_ACCURACY_KIND,
+            // own_velocity_accuracy_type option for 
+            OWN_VELOCITY_ACCURACY_KIND
+          };
+
+          // This is the set of instrument types and other means by which navigation
+          // information can be derived.
+          enum navigation_derivation_kind_type
+          {
+            // Information derived from instruments based on an Inertial Navigation System (e.g.
+            // Gyroscopes and Accelerometers)
+            INS,
+            // Information derived from instruments based on an Inertial Navigation System that
+            // measures acceleration using single particle systems that exploit quantum
+            // techniques.
+            QUANTUM_INS,
+            // Information derived from a satellite-based navigation system (e.g. GPS and
+            // GLONASS)
+            SATELLITE,
+            // Information derived from an instrument that exploits the Doppler effect to
+            // measure speed relative to the immediate environment, particularly water.
+            DOPPLER_LOG,
+            // Information derived from an instrument that exploits the electromagnetic dynamo
+            // effect (conductor moving through an electromagnetic field produces a proportional
+            // voltage) to measure speed relative to the immediate environment, particularly
+            // water.
+            EM_LOG,
+            // Information derived from an instrument that measures the (subsurface) sea or air
+            // pressure to estimate depth or altitude.
+            PRESSURE_SENSOR,
+            // Information derived from an instrument that measures the (subsurface) sea or air
+            // density to estimate depth or altitude.
+            DENSITY_SENSOR,
+            // Information derived by sensing the external environment and resolving position
+            // and orientation with reference to external data such as charts (e.g. SLAM
+            // techniques).
+            VISUAL_GEOLOCATION,
+            // Information derived by sensing the Earth's gravitational and/or magnetic field
+            // and/or their gradients using single particle systems that exploit quantum
+            // effects.
+            QUANTUM_GEOLOCATION,
+            // Navigation based on the intersection of hyperbolic curves derived from long wave
+            // radio signals from known ground stations with repeaters - e.g. LORAN B and C
+            LW_HYPERBOLIC_INTERSECT,
+            // Information derived by fusing data from more than one of these types of
+            // derivation source.
+            COMPOSITE,
+            // Information is estimated from previously measured values (e.g. dead-reckoning).
+            ESTIMATED,
+            // Information has been supplied by the user (e.g. manual entry from a
+            // non-integrated system).
+            USER_SUPPLIED,
+            // Information has been derived using some other technology
+            OTHER_METHOD
+          };
+
+          // Struct of base attributes defined for class navigation_accuracy_type.
+          struct navigation_accuracy_base_type
+          {
+            // The provenance or method by which the accuracy values have been derived
+            accuracy_derivation_type derivation;
+            // The accuracy (represented as one standard deviation) of the time value.
+            org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::duration_type time_accuracy;
+          };
+
+        };
+      };
+    };
+  };
+};
+#endif

@@ -1,0 +1,246 @@
+#ifndef ORGOMGC4IDOMAIN_MODELNAVIGATION_DOMAINATTITUDEEXTDEFVAR
+#define ORGOMGC4IDOMAIN_MODELNAVIGATION_DOMAINATTITUDEEXTDEFVAR
+#include "Common_Types.idl"
+#include "Coordinates_and_Positions.idl"
+#include "org__omg__c4i__Domain_Model__Navigation_Domain.idl"
+#include "org__omg__c4i__Domain_Model__Navigation_Domain__Attitude.idl"
+#include "org__omg__c4i__Domain_Model__Navigation_Domain__Reporting.idl"
+
+module org
+{
+
+  module omg
+  {
+
+    module c4i
+    {
+
+      module Domain_Model
+      {
+
+        module Navigation_Domain
+        {
+
+          module Attitude
+          {
+
+            module Ext
+            {
+
+              @doc("This class encapsulates the error estimates associated with the platform's \
+                rotational attitude rate values. Accuracies are reported as one standard \
+                deviation.")
+              struct attitude_rotation_rate_accuracy_type
+              {
+                @doc("The provenance or method by which the accuracy values have been derived")
+                org::omg::c4i::Domain_Model::Navigation_Domain::accuracy_derivation_type derivation;
+                @doc("The accuracy (represented as one standard deviation) of the time value.")
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::duration_type time_accuracy;
+                @doc("The accuracy of the pitch rate value to one standard deviation,")
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::elevation_rate_type pitch_rate_accuracy;
+                @doc("The accuracy of the roll rate value to one standard deviation,")
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::elevation_rate_type roll_rate_accuracy;
+                @doc("The accuracy of the yaw rate value to one standard deviation,")
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::azimuth_rate_type yaw_rate_accuracy;
+              };
+
+              @doc("struct holding keys for class")
+              struct attitude_rotation_rate_key_type
+              {
+                @doc("Whether the information has been simulated - e.g. for operator training.")
+                boolean simulated;
+                @doc("The kind of measurement being reported.")
+                org::omg::c4i::Domain_Model::Navigation_Domain::Attitude::measurement_kind_type measurement_kind;
+              };
+
+              @doc("This class encapsulates the instantaneous rate of rotation of the platform \
+                (relative to the Earth).")
+              struct attitude_rotation_rate_type
+              {
+                @doc("The generic type of navigation system used.")
+                org::omg::c4i::Domain_Model::Navigation_Domain::navigation_derivation_kind_type system_kind;
+                @doc("An optional set of contributing sensor kinds that have been used to derive the \
+                    report. This set is defined when the system_kind is COMPOSITE.")
+                org::omg::c4i::Domain_Model::Navigation_Domain::Reporting::navigation_report_composite_contributors_type composite_contributors;
+                @doc("The specific system employed - e.g. GPS, LORAN-B")
+                org::omg::c4i::Domain_Model::Navigation_Domain::Reporting::navigation_report_specific_system_type specific_system;
+                @doc("Whether the information has been simulated - e.g. for operator training.")
+                @key boolean simulated;
+                @doc("The time for which the report values are valid.")
+                org::omg::c4i::Domain_Model::Common_Types::time_type time_of_information;
+                @doc("The kind of measurement being reported.")
+                @key org::omg::c4i::Domain_Model::Navigation_Domain::Attitude::measurement_kind_type measurement_kind;
+                @doc("The pitch rate of the platform, relative to its center of rotation in a vertical \
+                    plane. It is the rate of change of clockwise angle of rotation around the lateral \
+                    axis(towards starboard/right) through the platform reference point. \
+                    For sea systems, the angle to the bow; \
+                    for air systems, the angle to the nose; \
+                    for land systems, the angle to the front.")
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::elevation_rate_type pitch_rate;
+                @doc("The roll rate of the platform, relative to its center of rotation in a vertical \
+                    plane. It is the rate of change of the angle of rotation about the longitudinal \
+                    axis through the platform reference point (front-to-back). \
+                    The roll angle is defined as that of the at-rest horizontal through the \
+                    platform's reference on the starboard side for sea and air systems and on the \
+                    right (forward facing) for land systems.")
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::elevation_rate_type roll_rate;
+                @doc("The yaw rate of the platform, relative to its center of rotation in a horizontal \
+                    plane. It is the rate of change of the angle of rotation about the vertical axis \
+                    through the platform reference point (top-to-bottom) relative to the platform's \
+                    demanded heading. \
+                    For sea systems, the angle to the bow; \
+                    for air systems, the angle to the nose; \
+                    for land systems, the angle to the front.")
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::azimuth_rate_type yaw_rate;
+                @doc("The accuracy of each rotation rate attribute")
+                attitude_rotation_rate_accuracy_type accuracy;
+              };
+
+              @doc("This class encapsulates the error estimates associated with the platform's \
+                attitude offset values. Accuracies are reported as one standard deviation.")
+              struct position_offset_accuracy_type
+              {
+                @doc("The provenance or method by which the accuracy values have been derived")
+                org::omg::c4i::Domain_Model::Navigation_Domain::accuracy_derivation_type derivation;
+                @doc("The accuracy (represented as one standard deviation) of the time value.")
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::duration_type time_accuracy;
+                @doc("The accuracy of the lateral value to one standard deviation,")
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::cartesian_coordinate_type sway_accuracy;
+                @doc("The accuracy of the longitudinal value to one standard deviation,")
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::cartesian_coordinate_type surge_accuracy;
+                @doc("The accuracy of the vertical value to one standard deviation,")
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::cartesian_coordinate_type heave_accuracy;
+              };
+
+              @doc("struct holding keys for class")
+              struct position_offset_key_type
+              {
+                @doc("Whether the information has been simulated - e.g. for operator training.")
+                boolean simulated;
+                @doc("The kind of measurement being reported.")
+                org::omg::c4i::Domain_Model::Navigation_Domain::Attitude::measurement_kind_type measurement_kind;
+              };
+
+              @doc("This class encapsulates the error estimates associated with the platform's \
+                attitude offset rate values. Accuracies are reported as one standard deviation.")
+              struct velocity_offset_accuracy_type
+              {
+                @doc("The provenance or method by which the accuracy values have been derived")
+                org::omg::c4i::Domain_Model::Navigation_Domain::accuracy_derivation_type derivation;
+                @doc("The accuracy (represented as one standard deviation) of the time value.")
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::duration_type time_accuracy;
+                @doc("The accuracy of the lateral rate value to one standard deviation,")
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::cartesian_velocity_component_type sway_rate_accuracy;
+                @doc("The accuracy of the longitudinal rate value to one standard deviation,")
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::cartesian_velocity_component_type surge_rate_accuracy;
+                @doc("The accuracy of the vertical rate value to one standard deviation,")
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::cartesian_velocity_component_type heave_rate_accuracy;
+              };
+
+              @doc("struct holding keys for class")
+              struct velocity_offset_key_type
+              {
+                @doc("Whether the information has been simulated - e.g. for operator training.")
+                boolean simulated;
+                @doc("The kind of measurement being reported.")
+                org::omg::c4i::Domain_Model::Navigation_Domain::Attitude::measurement_kind_type measurement_kind;
+              };
+
+              @doc("This class encapsulates the instantaneous offset of the platform from its mean \
+                reported motion. \
+                Non-normative: typically due to the variable motion of the environment - sea, \
+                air, etc. - through which it is travelling.")
+              struct position_offset_type
+              {
+                @doc("The generic type of navigation system used.")
+                org::omg::c4i::Domain_Model::Navigation_Domain::navigation_derivation_kind_type system_kind;
+                @doc("An optional set of contributing sensor kinds that have been used to derive the \
+                    report. This set is defined when the system_kind is COMPOSITE.")
+                org::omg::c4i::Domain_Model::Navigation_Domain::Reporting::navigation_report_composite_contributors_type composite_contributors;
+                @doc("The specific system employed - e.g. GPS, LORAN-B")
+                org::omg::c4i::Domain_Model::Navigation_Domain::Reporting::navigation_report_specific_system_type specific_system;
+                @doc("Whether the information has been simulated - e.g. for operator training.")
+                @key boolean simulated;
+                @doc("The time for which the report values are valid.")
+                org::omg::c4i::Domain_Model::Common_Types::time_type time_of_information;
+                @doc("The kind of measurement being reported.")
+                @key org::omg::c4i::Domain_Model::Navigation_Domain::Attitude::measurement_kind_type measurement_kind;
+                @doc("The instantaneous offset from mean motion on the longitudinal horizontal axis \
+                  through the platform reference point. \
+                  For sea systems stern-bow - bow positive \
+                  For air systems tail-nose - nose positive \
+                  For land systems back-to-front - front positive.")
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::cartesian_coordinate_type surge;
+                // The instantaneous offset from mean motion on the lateral horizontal axis through
+                // the platform reference point.
+                // For sea and air systems port-starboard - starboard positive
+                // For land systems side-to-side - right positive when facing forwards.
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::cartesian_coordinate_type sway;
+                // The instantaneous offset from mean motion on the vertical axis through the
+                // platform reference point.
+                // For sea systems keel-mast - mast positive
+                // For air and land systems bottom-to-top - top positive.
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::cartesian_coordinate_type heave;
+                // The accuracy of each position offset attribute
+                position_offset_accuracy_type accuracy;
+              };
+#ifndef DDS_XTYPES
+#pragma keylist position_offset_type simulated measurement_kind
+#endif
+
+              // This class encapsulates the instantaneous rate of change of the offset of the
+              // platform from its mean reported motion.
+              struct velocity_offset_type
+              {
+                // The generic type of navigation system used.
+                org::omg::c4i::Domain_Model::Navigation_Domain::navigation_derivation_kind_type system_kind;
+                // An optional set of contributing sensor kinds that have been used to derive the
+                // report. This set is defined when the system_kind is COMPOSITE.
+                org::omg::c4i::Domain_Model::Navigation_Domain::Reporting::navigation_report_composite_contributors_type composite_contributors;
+                // The specific system employed - e.g. GPS, LORAN-B
+                org::omg::c4i::Domain_Model::Navigation_Domain::Reporting::navigation_report_specific_system_type specific_system;
+                // Whether the information has been simulated - e.g. for operator training.
+#ifdef DDS_XTYPES
+                @key boolean simulated;
+#else
+                boolean simulated;
+#endif
+                // The time for which the report values are valid.
+                org::omg::c4i::Domain_Model::Common_Types::time_type time_of_information;
+                // The kind of measurement being reported.
+#ifdef DDS_XTYPES
+                @key org::omg::c4i::Domain_Model::Navigation_Domain::Attitude::measurement_kind_type measurement_kind;
+#else
+                org::omg::c4i::Domain_Model::Navigation_Domain::Attitude::measurement_kind_type measurement_kind;
+#endif
+                // The instantaneous rate of change of the offset from mean motion on the lateral
+                // horizontal axis through the platform reference point.
+                // For sea and air systems port-starboard - starboard positive
+                // For land systems side-to-side - right positive when facing forwards.
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::cartesian_velocity_component_type sway_rate;
+                // The instantaneous rate of change of the offset from mean motion on the
+                // longitudinal horizontal axis through the platform reference point.
+                // For sea systems stern-bow - bow positive
+                // For air systems tail-nose - nose positive
+                // For land systems back-to-front - front positive.
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::cartesian_velocity_component_type surge_rate;
+                // The instantaneous rate of change of the offset from mean motion on the vertical
+                // axis through the platform reference point.
+                // For sea systems keel-mast - mast positive
+                // For air and land systems bottom-to-top - top positive.
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::cartesian_velocity_component_type heave_rate;
+                // The accuracy of each velocity offset attribute
+                velocity_offset_accuracy_type accuracy;
+              };
+#ifndef DDS_XTYPES
+#pragma keylist velocity_offset_type simulated measurement_kind
+#endif
+
+            };
+          };
+        };
+      };
+    };
+  };
+};
+#endif

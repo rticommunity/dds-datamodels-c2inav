@@ -1,0 +1,111 @@
+#ifndef ORGOMGC4IDOMAIN_MODELNAVIGATION_DOMAINPOSITIONEXTDEFVAR
+#define ORGOMGC4IDOMAIN_MODELNAVIGATION_DOMAINPOSITIONEXTDEFVAR
+#include "Common_Types.idl"
+#include "Coordinates_and_Positions.idl"
+#include "org__omg__c4i__Domain_Model__Navigation_Domain.idl"
+#include "org__omg__c4i__Domain_Model__Navigation_Domain__Position.idl"
+#include "org__omg__c4i__Domain_Model__Navigation_Domain__Reporting.idl"
+
+module org
+{
+
+  module omg
+  {
+
+    module c4i
+    {
+
+      module Domain_Model
+      {
+
+        module Navigation_Domain
+        {
+
+          module Position
+          {
+
+            module Ext
+            {
+
+              // struct holding keys for class .
+              struct own_acceleration_key_type
+              {
+                // Whether the information has been simulated - e.g. for operator training.
+                boolean simulated;
+                // The definition of the acceleration (change in velocity) being measured.
+                org::omg::c4i::Domain_Model::Navigation_Domain::Position::velocity_measurement_type measurement_kind;
+              };
+
+              // The rate of change of speed in metres per second-squared
+              typedef double speed_rate_type;
+
+              // a simple union type, to represent an optional value
+              union own_acceleration_accuracy_angle_of_climb_rate_accuracy_type switch (boolean)
+              {
+              // the value when present
+              case TRUE : org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::elevation_rate_type value;
+              };
+
+              // a simple union type, to represent an optional value
+              union own_acceleration_angle_of_climb_rate_type switch (boolean)
+              {
+              // the value when present
+              case TRUE : org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::elevation_rate_type value;
+              };
+
+              // The accuracy of the platform's own acceleration report.
+              struct own_acceleration_accuracy_type
+              {
+                // The accuracy of the speed rate - 1 standard deviation
+                speed_rate_type speed_rate_accuracy;
+                // The accuracy of the heading rate - 1 standard deviation
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::azimuth_rate_type heading_rate_accuracy;
+                // The accuracy of the angle of climb rate - 1 standard deviation
+                own_acceleration_accuracy_angle_of_climb_rate_accuracy_type angle_of_climb_rate_accuracy;
+              };
+
+              // The platform's reporting of its change in velocity
+              struct own_acceleration_type
+              {
+                // The generic type of navigation system used.
+                org::omg::c4i::Domain_Model::Navigation_Domain::navigation_derivation_kind_type system_kind;
+                // An optional set of contributing sensor kinds that have been used to derive the
+                // report. This set is defined when the system_kind is COMPOSITE.
+                org::omg::c4i::Domain_Model::Navigation_Domain::Reporting::navigation_report_composite_contributors_type composite_contributors;
+                // The specific system employed - e.g. GPS, LORAN-B
+                org::omg::c4i::Domain_Model::Navigation_Domain::Reporting::navigation_report_specific_system_type specific_system;
+                // Whether the information has been simulated - e.g. for operator training.
+#ifdef DDS_XTYPES
+                @key boolean simulated;
+#else
+                boolean simulated;
+#endif
+                // The time for which the report values are valid.
+                org::omg::c4i::Domain_Model::Common_Types::time_type time_of_information;
+                // The rate at which the speed is changing
+                speed_rate_type speed_rate;
+                // The rate at which the heading is changing
+                org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::azimuth_rate_type heading_rate;
+                // The rate at which the angle of climb is changing
+                own_acceleration_angle_of_climb_rate_type angle_of_climb_rate;
+                // The definition of the acceleration (change in velocity) being measured.
+#ifdef DDS_XTYPES
+                @key org::omg::c4i::Domain_Model::Navigation_Domain::Position::velocity_measurement_type measurement_kind;
+#else
+                org::omg::c4i::Domain_Model::Navigation_Domain::Position::velocity_measurement_type measurement_kind;
+#endif
+                // The accuracy of each acceleration attribute
+                own_acceleration_accuracy_type accuracy;
+              };
+#ifndef DDS_XTYPES
+#pragma keylist own_acceleration_type simulated measurement_kind
+#endif
+
+            };
+          };
+        };
+      };
+    };
+  };
+};
+#endif

@@ -1,0 +1,53 @@
+#ifndef ORGOMGC4IDOMAIN_MODELNAVIGATION_DOMAINNAVIGATION_ACCURACYDEFVAR
+#define ORGOMGC4IDOMAIN_MODELNAVIGATION_DOMAINNAVIGATION_ACCURACYDEFVAR
+#include "org__omg__c4i__Domain_Model__Navigation_Domain.idl"
+#include "org__omg__c4i__Domain_Model__Navigation_Domain__Attitude.idl"
+#include "org__omg__c4i__Domain_Model__Navigation_Domain__Attitude__Ext.idl"
+#include "org__omg__c4i__Domain_Model__Navigation_Domain__Depth.idl"
+#include "org__omg__c4i__Domain_Model__Navigation_Domain__Position.idl"
+
+module org
+{
+
+  module omg
+  {
+
+    module c4i
+    {
+
+      module Domain_Model
+      {
+
+        module Navigation_Domain
+        {
+
+          module Navigation_Accuracy
+          {
+
+            // Union of specialisations for class navigation_accuracy_type.
+            // A base type for classes that report the accuracy of navigational measurements
+            union navigation_accuracy_type switch (navigation_accuracy_kind_type)
+            {
+              // attitude_rotation_accuracy_type option for navigation_accuracy_type
+              case ATTITUDE_ROTATION_ACCURACY_KIND : org::omg::c4i::Domain_Model::Navigation_Domain::Attitude::attitude_rotation_accuracy_type attitude_rotation_accuracy;
+              // attitude_rotation_rate_accuracy_type option for navigation_accuracy_type
+              case ATTITUDE_ROTATION_RATE_ACCURACY_KIND : org::omg::c4i::Domain_Model::Navigation_Domain::Attitude::Ext::attitude_rotation_rate_accuracy_type attitude_rotation_rate_accuracy;
+              // position_offset_accuracy_type option for navigation_accuracy_type
+              case POSITION_OFFSET_ACCURACY_KIND : org::omg::c4i::Domain_Model::Navigation_Domain::Attitude::Ext::position_offset_accuracy_type position_offset_accuracy;
+              // velocity_offset_accuracy_type option for navigation_accuracy_type
+              case VELOCITY_OFFSET_ACCURACY_KIND : org::omg::c4i::Domain_Model::Navigation_Domain::Attitude::Ext::velocity_offset_accuracy_type velocity_offset_accuracy;
+              // depth_accuracy_type option for navigation_accuracy_type
+              case DEPTH_ACCURACY_KIND : org::omg::c4i::Domain_Model::Navigation_Domain::Depth::depth_accuracy_type depth_accuracy;
+              // own_position_accuracy_type option for navigation_accuracy_type
+              case OWN_POSITION_ACCURACY_KIND : org::omg::c4i::Domain_Model::Navigation_Domain::Position::own_position_accuracy_type own_position_accuracy;
+              // own_velocity_accuracy_type option for navigation_accuracy_type
+              case OWN_VELOCITY_ACCURACY_KIND : org::omg::c4i::Domain_Model::Navigation_Domain::Position::own_velocity_accuracy_type own_velocity_accuracy;
+            };
+
+          };
+        };
+      };
+    };
+  };
+};
+#endif

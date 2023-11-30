@@ -1,0 +1,150 @@
+#ifndef ORGOMGC4IDOMAIN_MODELNAVIGATION_DOMAINATTITUDEDEFVAR
+#define ORGOMGC4IDOMAIN_MODELNAVIGATION_DOMAINATTITUDEDEFVAR
+#include "Common_Types.idl"
+#include "Coordinates_and_Positions.idl"
+#include "org__omg__c4i__Domain_Model__Navigation_Domain.idl"
+#include "org__omg__c4i__Domain_Model__Navigation_Domain__Reporting.idl"
+
+module org
+{
+
+  module omg
+  {
+
+    module c4i
+    {
+
+      module Domain_Model
+      {
+
+        module Navigation_Domain
+        {
+
+          // This package contains classes to model the attitude of the platform. That is the
+          // orientation and offset of the platform relative to its reported position. This
+          // package provides a data model for services that relate to micro-scale precision,
+          // supporting precise location and orientation of an individual component of the
+          // platform. 
+          module Attitude
+          {
+
+            // This class encapsulates the error estimates associated with the platform's
+            // rotational attitude values. Accuracies are reported as one standard deviation.
+            struct attitude_rotation_accuracy_type
+            {
+              // The provenance or method by which the accuracy values have been derived
+              org::omg::c4i::Domain_Model::Navigation_Domain::accuracy_derivation_type derivation;
+              // The accuracy (represented as one standard deviation) of the time value.
+              org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::duration_type time_accuracy;
+              // The accuracy of the pitch value to one standard deviation,
+              org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::elevation_coordinate_type pitch_accuracy;
+              // The accuracy of the roll value to one standard deviation,
+              org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::elevation_coordinate_type roll_accuracy;
+              // The accuracy of the yaw value to one standard deviation,
+              org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::azimuth_coordinate_type yaw_accuracy;
+            };
+
+            // The kind of measurement relating to the statistical process applied to the
+            // quantities in question over time.
+            enum measurement_kind_type
+            {
+              // The maximum of the absolute value of the raw measurements over a complete cycle
+              // (a complete cycle is defined as the interval between local maxima).
+              ABSOLUTE_PEAK,
+              // The raw measurement at the stated time
+              INSTANTANEOUS,
+              // The arithmetic mean (average) of the raw measurements over a complete cycle (a
+              // complete cycle is defined as the interval between local maxima).
+              MEAN,
+              // The root mean square average of the raw measurements over a complete cycle (a
+              // complete cycle is defined as the interval between local maxima).
+              ROOT_MEAN_SQUARE,
+              // The system's best estimate for the current value of the quantities based on
+              // recent raw measurements.
+              SMOOTHED
+            };
+
+            // struct holding keys for class .
+            struct attitude_rotation_key_type
+            {
+              // Whether the information has been simulated - e.g. for operator training.
+              boolean simulated;
+              // The kind of measurement being reported.
+              measurement_kind_type measurement_kind;
+            };
+
+            // Enumeration of specialisations options for keys to classes based on generalisation offset_report_type.
+            enum offset_report_key_kind_type
+            {
+              // The literal for referencing the attitude_rotation_type specialisation of offset_report_type.
+              ATTITUDE_ROTATION,
+              // The literal for referencing the attitude_rotation_rate_type specialisation of offset_report_type.
+              ATTITUDE_ROTATION_RATE,
+              // The literal for referencing the position_offset_type specialisation of offset_report_type.
+              POSITION_OFFSET,
+              // The literal for referencing the velocity_offset_type specialisation of offset_report_type.
+              VELOCITY_OFFSET
+            };
+
+            // This class encapsulates the instantaneous rotation of the platform from its
+            // nominal, at-rest orientation
+            // Non-normative: typically due to the variable motion of the environment - sea,
+            // air, etc. - through which it is travelling.
+            struct attitude_rotation_type
+            {
+              // The generic type of navigation system used.
+              org::omg::c4i::Domain_Model::Navigation_Domain::navigation_derivation_kind_type system_kind;
+              // An optional set of contributing sensor kinds that have been used to derive the
+              // report. This set is defined when the system_kind is COMPOSITE.
+              org::omg::c4i::Domain_Model::Navigation_Domain::Reporting::navigation_report_composite_contributors_type composite_contributors;
+              // The specific system employed - e.g. GPS, LORAN-B
+              org::omg::c4i::Domain_Model::Navigation_Domain::Reporting::navigation_report_specific_system_type specific_system;
+              // Whether the information has been simulated - e.g. for operator training.
+#ifdef DDS_XTYPES
+              @key boolean simulated;
+#else
+              boolean simulated;
+#endif
+              // The time for which the report values are valid.
+              org::omg::c4i::Domain_Model::Common_Types::time_type time_of_information;
+              // The kind of measurement being reported.
+#ifdef DDS_XTYPES
+              @key measurement_kind_type measurement_kind;
+#else
+              measurement_kind_type measurement_kind;
+#endif
+              // The pitch of the platform, relative to its center of rotation in a vertical
+              // plane. It is the clockwise angle of rotation around the lateral axis (towards
+              // starboard/right) through the platform reference point.
+              // For sea systems, the angle from horizontal to the bow;
+              // for air systems, the angle from horizontal to the nose;
+              // for land systems, the angle from horizontal to the front.
+              org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::elevation_coordinate_type pitch;
+              // The roll of the platform, relative to its center of rotation in a vertical plane.
+              // It is the angle of rotation about the longitudinal axis through the platform
+              // reference point (front-to-back).
+              // The roll angle is defined as that of the at-rest horizontal through the
+              // platform's reference on the starboard side for sea and air systems and on the
+              // right (forward facing) for land systems.
+              org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::elevation_coordinate_type roll;
+              // The yaw of the platform, relative to its center of rotation in a horizontal
+              // plane. It is the angle of rotation about the vertical axis through the platform
+              // reference point (top-to-bottom) relative to the platform’s demanded heading.
+              // For sea systems, the angle to the bow;
+              // for air systems, the angle to the nose;
+              // for land systems, the angle to the front.
+              org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::azimuth_coordinate_type yaw;
+              // The accuracy of each rotation attribute
+              attitude_rotation_accuracy_type accuracy;
+            };
+#ifndef DDS_XTYPES
+#pragma keylist attitude_rotation_type simulated measurement_kind
+#endif
+
+          };
+        };
+      };
+    };
+  };
+};
+#endif

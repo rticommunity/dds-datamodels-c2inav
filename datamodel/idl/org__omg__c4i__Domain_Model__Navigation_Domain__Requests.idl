@@ -1,0 +1,75 @@
+#ifndef ORGOMGC4IDOMAIN_MODELNAVIGATION_DOMAINREQUESTSDEFVAR
+#define ORGOMGC4IDOMAIN_MODELNAVIGATION_DOMAINREQUESTSDEFVAR
+#include "Coordinates_and_Positions.idl"
+#include "org__omg__c4i__Domain_Model__Navigation_Domain__Attitude.idl"
+#include "org__omg__c4i__Domain_Model__Navigation_Domain__Position.idl"
+#include "org__omg__c4i__Domain_Model__Navigation_Domain__Reporting.idl"
+
+module org
+{
+
+  module omg
+  {
+
+    module c4i
+    {
+
+      module Domain_Model
+      {
+
+        module Navigation_Domain
+        {
+
+          // This package contains classes that encapsulate the information that can
+          // parameterize the reporting of navigation information.
+          module Requests
+          {
+
+            // a simple union type, to represent an optional value
+            union navigation_request_measurement_kind_type switch (boolean)
+            {
+            // the value when present
+            case TRUE : org::omg::c4i::Domain_Model::Navigation_Domain::Attitude::measurement_kind_type value;
+            };
+
+            // a simple union type, to represent an optional value
+            union navigation_request_velocity_measurement_type switch (boolean)
+            {
+            // the value when present
+            case TRUE : org::omg::c4i::Domain_Model::Navigation_Domain::Position::velocity_measurement_type value;
+            };
+
+            // a simple union type, to represent an optional value
+            union navigation_request_interval_type switch (boolean)
+            {
+            // the value when present
+            case TRUE : org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::duration_type value;
+            };
+
+            // This class is used to construct requests for data to a navigation system and also
+            // to cancel such requests.
+            // When used to cancel requests the interval should be omitted by the C2 System and
+            // ignored by the Navigation System
+            struct navigation_request_type
+            {
+              // The type of data to be reported in response to the request.
+              org::omg::c4i::Domain_Model::Navigation_Domain::Reporting::navigation_report_kind_type report_kind;
+              // The kind of statistical reporting of the measurements being requested. Omit to
+              // request all measurement kinds supported by the navigation system.
+              navigation_request_measurement_kind_type measurement_kind;
+              // The type of velocity measurement requested. This is only valid if the report kind
+              // indicates velocity. Omit to request all velocity measurements supported by the
+              // navigation system.
+              navigation_request_velocity_measurement_type velocity_measurement;
+              // The nominal interval between reports being requested. Omit to request at the
+              // default rate for the navigation system.
+              navigation_request_interval_type interval;
+            };
+
+          };
+        };
+      };
+    };
+  };
+};
+#endif

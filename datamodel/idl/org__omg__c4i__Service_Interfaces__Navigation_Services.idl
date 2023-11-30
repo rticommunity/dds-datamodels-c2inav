@@ -1,0 +1,75 @@
+#ifndef ORGOMGC4ISERVICE_INTERFACESNAVIGATION_SERVICESDEFVAR
+#define ORGOMGC4ISERVICE_INTERFACESNAVIGATION_SERVICESDEFVAR
+#include "Requests.idl"
+#include "org__omg__c4i__Domain_Model__Navigation_Domain__Reporting__Ext.idl"
+#include "org__omg__c4i__Domain_Model__Navigation_Domain__Requests.idl"
+
+module org
+{
+
+  module omg
+  {
+
+    module c4i
+    {
+
+      module Service_Interfaces
+      {
+
+        module Navigation_Services
+        {
+
+          // Request the navigation system to send all its available navigational information
+          // at the navigation system's default rate for the data. Where the reported data can
+          // have different statistical representations (measurement kinds) all forms
+          // supported by the navigation subsystem are reported at the navigation system's
+          // default rate for that measurement and report kind. Can also cancel requests to
+          // the navigation system to send any of its available navigational information.
+          // The interface implemented by a navigation system to provide C2INav services.
+          struct request_default_navigation_data_type
+          {
+            org::omg::c4i::Domain_Model::Common_Types::Requests::request_id_type request_id;
+            boolean cancel;
+          };
+#ifndef DDS_XTYPES
+#pragma keylist request_default_navigation_data_type
+#endif
+
+          // Request the navigation system to send a particular kind of navigation report with
+          // specified measurement types at a configurable interval.If the data is already
+          // being reported then this request updates the interval at which it is reported (or
+          // sets it to the navigation system's default rate); it does not act cumulatively on
+          // existing data reporting. Can also cancel requests to the navigation system to
+          // send any of its available navigational information.
+          // The interface implemented by a navigation system to provide C2INav services.
+          struct request_custom_navigation_data_type
+          {
+            org::omg::c4i::Domain_Model::Common_Types::Requests::request_id_type request_id;
+            org::omg::c4i::Domain_Model::Navigation_Domain::Requests::navigation_request_type request;
+            boolean cancel;
+          };
+#ifndef DDS_XTYPES
+#pragma keylist request_custom_navigation_data_type
+#endif
+
+          // Requests the covariance between a chosen set of quantities to be reported. The
+          // covariance is to be reported at the fastest reporting rate of the chosen
+          // quantities.Can also cancel requests to the navigation system to send the
+          // particular covariance information.
+          // The interface implemented by a navigation system to provide C2INav services.
+          struct request_covariance_type
+          {
+            org::omg::c4i::Domain_Model::Common_Types::Requests::request_id_type request_id;
+            org::omg::c4i::Domain_Model::Navigation_Domain::Reporting::Ext::navigation_report_kind_sequence_type report_kinds;
+            boolean cancel;
+          };
+#ifndef DDS_XTYPES
+#pragma keylist request_covariance_type
+#endif
+
+        };
+      };
+    };
+  };
+};
+#endif
