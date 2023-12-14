@@ -20,174 +20,148 @@ module org
         module Navigation_Domain
         {
 
-          // This package contains classes to model the platform's position including
-          // height/depth/altitude, velocity and acceleration. This package provides a data
-          // model for services that relate to macro-scale precision, supporting the location
-          // and motion of the platform as a point entity within its environment.
+          @doc("This package contains classes to model the platform's position including \
+            height/depth/altitude, velocity and acceleration. This package provides a data \
+            model for services that relate to macro-scale precision, supporting the location \
+            and motion of the platform as a point entity within its environment.")
           module Position
           {
 
-            // This class indicates the semantics of the height attribute. It describes how the
-            // reported height (or depth) has been derived.
+            @doc("This class indicates the semantics of the height attribute. It describes how the \
+                reported height (or depth) has been derived.")
             enum altitude_measurement_type
             {
-              // As reported by the platform's own altimeter (or depth sensor). Typically, but not
-              // necessarily this is pressure related. The precise option rather than this one
-              // should be reported if known.
+              @doc("As reported by the platform's own altimeter (or depth sensor). Typically, but not \
+                necessarily this is pressure related. The precise option rather than this one \
+                should be reported if known.")
               INDICATED,
-              // It is derived from a pressure sensor.
+              @doc("It is derived from a pressure sensor.")
               PRESSURE,
-              // It is reporting a measurement based on local density (of air or water).
+              @doc("It is reporting a measurement based on local density (of air or water).")
               DENSITY,
-              // It is reporting a measurement based on local gravity.
+              @doc("It is reporting a measurement based on local gravity.")
               GRAVITY,
-              // The distance to the ground below (or above for underground systems)  is being
-              // measured and reported.
+              @doc("The distance to the ground below (or above for underground systems) is being \
+                measured and reported.")
               RELATIVE_TO_GROUND,
-              // It is reporting a measurement made relative to the GEOID (WGS84) - e.g. using a
-              // satellite navigation system.
+              @doc("It is reporting a measurement made relative to the GEOID (WGS84) - e.g. using a \
+                satellite navigation system.")
               RELATIVE_TO_GEOID,
-              // It is reporting a measurement made relative to mean sea level.
+              @doc("It is reporting a measurement made relative to mean sea level.")
               RELATIVE_TO_MSL
             };
 
-            // The accuracy of the platform's own position report.
+            @doc("The accuracy of the platform's own position report.")
             struct own_position_accuracy_type
             {
-              // The provenance or method by which the accuracy values have been derived
+              @doc("The provenance or method by which the accuracy values have been derived")
               org::omg::c4i::Domain_Model::Navigation_Domain::accuracy_derivation_type derivation;
-              // The accuracy (represented as one standard deviation) of the time value.
+              @doc("The accuracy (represented as one standard deviation) of the time value.")
               org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::duration_type time_accuracy;
-              // The accuracy of the reported position in the chosen coordinate system for
-              // reporting. This should be the same choice as for the position itself.
+              @doc("The accuracy of the reported position in the chosen coordinate system for \
+                reporting. This should be the same choice as for the position itself.")
               org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::position_accuracy_coordinate_type position;
             };
 
-            // The accuracy of the platform's own velocity report.
+            @doc("The accuracy of the platform's own velocity report.")
             struct own_velocity_accuracy_type
             {
-              // The provenance or method by which the accuracy values have been derived
+              @doc("The provenance or method by which the accuracy values have been derived")
               org::omg::c4i::Domain_Model::Navigation_Domain::accuracy_derivation_type derivation;
-              // The accuracy (represented as one standard deviation) of the time value.
+              @doc("The accuracy (represented as one standard deviation) of the time value.")
               org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::duration_type time_accuracy;
-              // The accuracy of the reporting platform's velocity with reference to the
-              // coordinate system used for reporting..
+              @doc("The accuracy of the reporting platform's velocity with reference to the \
+                coordinate system used for reporting.")
               org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::velocity_accuracy_coordinate_type velocity;
             };
 
-            // This class defines what it is that is having its velocity measured.
+            @doc("This class defines what it is that is having its velocity measured.")
             enum velocity_measurement_type
             {
-              // The measurement is of absolute velocity (i.e. relative to the Earth).
+              @doc("The measurement is of absolute velocity (i.e. relative to the Earth).")
               ABSOLUTE,
-              // The measurement is of velocity relative to the environment (i.e. water or air)
-              // using a method that is not subject to systematic approximation error as is the
-              // case with 'Indicated Air Speed' as measured by a pressure sensor.
+              @doc("The measurement is of velocity relative to the environment (i.e. water or air) \
+                using a method that is not subject to systematic approximation error as is the \
+                case with 'Indicated Air Speed' as measured by a pressure sensor.")
               RELATIVE_TRUE,
-              // The measurement is of velocity relative to the environment (i.e. water or air)
-              // using an indirect approximation such as air pressure. 
+              @doc("The measurement is of velocity relative to the environment (i.e. water or air) \
+                using an indirect approximation such as air pressure.")
               RELATIVE_INDICATED,
-              // The measurement is of the water current in the local environment itself (i.e. the
-              // movement of the water).
+              @doc("The measurement is of the water current in the local environment itself (i.e. the \
+                movement of the water).")
               WATER,
-              // The measurement is of the air in the local environment itself (i.e. the wind
-              // speed). This is only to be reported as a true value; i.e. it is not be based on a
-              // pressure-based 'indicated' sensor reading for relative air speed that isn't
-              // corrected for density. 
+              @doc("The measurement is of the air in the local environment itself (i.e. the wind \
+                speed). This is only to be reported as a true value; i.e. it is not be based on a \
+                pressure-based 'indicated' sensor reading for relative air speed that isn't \
+                corrected for density.")
               AIR
             };
 
-            // a simple union type, to represent an optional value
-            union own_position_altitude_kind_type switch (boolean)
-            {
-            // the value when present
-            case TRUE : altitude_measurement_type value;
-            };
-
-            // struct holding keys for class .
+            @doc("struct holding keys for class")
             struct own_velocity_key_type
             {
-              // Whether the information has been simulated - e.g. for operator training.
+              @doc("Whether the information has been simulated - e.g. for operator training.")
               boolean simulated;
-              // The definition of the velocity being measured.
+              @doc("The definition of the velocity being measured.")
               velocity_measurement_type measurement_kind;
             };
 
-            // The platform's own position report.
+            @doc("The platform's own position report.")
             struct own_position_type
             {
-              // The generic type of navigation system used.
+              @doc("The generic type of navigation system used.")
               org::omg::c4i::Domain_Model::Navigation_Domain::navigation_derivation_kind_type system_kind;
-              // An optional set of contributing sensor kinds that have been used to derive the
-              // report. This set is defined when the system_kind is COMPOSITE.
+              @doc("An optional set of contributing sensor kinds that have been used to derive the \
+                report. This set is defined when the system_kind is COMPOSITE.")
               org::omg::c4i::Domain_Model::Navigation_Domain::Reporting::navigation_report_composite_contributors_type composite_contributors;
-              // The specific system employed - e.g. GPS, LORAN-B
+              @doc("The specific system employed - e.g. GPS, LORAN-B")
               org::omg::c4i::Domain_Model::Navigation_Domain::Reporting::navigation_report_specific_system_type specific_system;
-              // Whether the information has been simulated - e.g. for operator training.
-#ifdef DDS_XTYPES
+              @doc("Whether the information has been simulated - e.g. for operator training.")
               @key boolean simulated;
-#else
-              boolean simulated;
-#endif
-              // The time for which the report values are valid.
+              @doc("The time for which the report values are valid.")
               org::omg::c4i::Domain_Model::Common_Types::time_type time_of_information;
-              // The position of the reporting platform in the chosen coordinate system for
-              // reporting.
+              @doc("The position of the reporting platform in the chosen coordinate system for \
+                reporting.")
               org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::position_coordinate_type position;
-              // The specification of the coordinate system used for reporting own position and
-              // its accuracy. In most use cases Cartesian or WGS84, Earth Referenced choices are
-              // expected; in some use cases other choices for reporting relative to some known
-              // datum could be used.
+              @doc("The specification of the coordinate system used for reporting own position and \
+                its accuracy. In most use cases Cartesian or WGS84, Earth Referenced choices are \
+                expected; in some use cases other choices for reporting relative to some known \
+                datum could be used.")
               org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::coordinate_specification_type coordinate_specification;
-              // Describes the semantics of the position's altitude attribute. Optional: omit only
-              // if altitude is not reported.
-              own_position_altitude_kind_type altitude_kind;
-              // The accuracy of each position attribute
+              @doc("Describes the semantics of the position's altitude attribute. Optional: omit only \
+                if altitude is not reported.")
+              @optional altitude_measurement_type altitude_kind;
+              @doc("The accuracy of each position attribute")
               own_position_accuracy_type accuracy;
             };
-#ifndef DDS_XTYPES
-#pragma keylist own_position_type simulated
-#endif
 
-            // The platform's own velocity report.
+            @doc("The platform's own velocity report.")
             struct own_velocity_type
             {
-              // The generic type of navigation system used.
+              @doc("The generic type of navigation system used.")
               org::omg::c4i::Domain_Model::Navigation_Domain::navigation_derivation_kind_type system_kind;
-              // An optional set of contributing sensor kinds that have been used to derive the
-              // report. This set is defined when the system_kind is COMPOSITE.
+              @doc("An optional set of contributing sensor kinds that have been used to derive the \
+                report. This set is defined when the system_kind is COMPOSITE.")
               org::omg::c4i::Domain_Model::Navigation_Domain::Reporting::navigation_report_composite_contributors_type composite_contributors;
-              // The specific system employed - e.g. GPS, LORAN-B
+              @doc("The specific system employed - e.g. GPS, LORAN-B")
               org::omg::c4i::Domain_Model::Navigation_Domain::Reporting::navigation_report_specific_system_type specific_system;
-              // Whether the information has been simulated - e.g. for operator training.
-#ifdef DDS_XTYPES
+              @doc("Whether the information has been simulated - e.g. for operator training.")
               @key boolean simulated;
-#else
-              boolean simulated;
-#endif
-              // The time for which the report values are valid.
+              @doc("The time for which the report values are valid.")
               org::omg::c4i::Domain_Model::Common_Types::time_type time_of_information;
-              // The velocity of the reporting platform with reference to the chosen coordinate
-              // system for reporting.
+              @doc("The velocity of the reporting platform with reference to the chosen coordinate \
+                system for reporting.")
               org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::velocity_coordinate_type velocity;
-              // The specification of the coordinate system used for reporting own velocity and
-              // its accuracy. In most use cases Cartesian or WGS84, Earth Referenced choices are
-              // expected; in some use cases other choices for reporting relative to some known
-              // datum could be used.
+              @doc("The specification of the coordinate system used for reporting own velocity and \
+                its accuracy. In most use cases Cartesian or WGS84, Earth Referenced choices are \
+                expected; in some use cases other choices for reporting relative to some known \
+                datum could be used.")
               org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::coordinate_specification_type coordinate_specification;
-              // The definition of the velocity being measured.
-#ifdef DDS_XTYPES
+              @doc("The definition of the velocity being measured.")
               @key velocity_measurement_type measurement_kind;
-#else
-              velocity_measurement_type measurement_kind;
-#endif
-              // The accuracy of each velocity attribute
+              @doc("The accuracy of each velocity attribute")
               own_velocity_accuracy_type accuracy;
             };
-#ifndef DDS_XTYPES
-#pragma keylist own_velocity_type simulated measurement_kind
-#endif
-
           };
         };
       };

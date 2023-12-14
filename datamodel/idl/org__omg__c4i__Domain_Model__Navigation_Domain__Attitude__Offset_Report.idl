@@ -21,11 +21,11 @@ module org
           module Attitude
           {
 
-            // Additional classes supporting generalisation offset_report_type.
+            @doc("Additional classes supporting generalisation offset_report_type.")
             module Offset_Report
             {
 
-              // Union of specialisations options for keys to classes based on generalisation offset_report_type.
+              @doc("Union of specialisations options for keys to classes based on generalisation offset_report_type.")
               union offset_report_union_key_type switch (offset_report_key_kind_type)
               {
                 case ATTITUDE_ROTATION : org::omg::c4i::Domain_Model::Navigation_Domain::Attitude::attitude_rotation_key_type attitude_rotation_key;

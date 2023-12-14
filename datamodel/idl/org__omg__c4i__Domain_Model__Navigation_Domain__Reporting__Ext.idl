@@ -24,40 +24,36 @@ module org
             module Ext
             {
 
-              // A sequence of navigation report kinds. It is expected that this class will map to
-              // implementation specific mechanisms in PSMs.
+              @doc("A sequence of navigation report kinds. It is expected that this class will map to \
+                implementation specific mechanisms in PSMs.")
               typedef sequence<org::omg::c4i::Domain_Model::Navigation_Domain::Reporting::navigation_report_kind_type, 6> navigation_report_kind_sequence_type;
 
-              // A sequence type, to represent multiple values.
+              @doc("A sequence type, to represent multiple values.")
               typedef sequence<double, 253> navigation_covariance_value_type;
 
-              // A sequence type, to represent multiple values.
+              @doc("A sequence type, to represent multiple values.")
               typedef sequence<org::omg::c4i::Domain_Model::Navigation_Domain::Reporting::Navigation_Report::navigation_report_union_key_type, 6> navigation_covariance_report_id_type;
 
-              // This class encapsulates the covariance between the measurements in one or more
-              // navigation_report_instances. The rows and columns of the triangular covariance
-              // matrix relate to the (3) quantities from the first instance, optionally the (3)
-              // quantities from each of the further instances and finally, optionally, time.
-              // This, for instance allows the covariance between rotational attitude and position
-              // to be represented or the covariance between rotational attitude, position, all
-              // their rates of change and time. 
+              @doc("This class encapsulates the covariance between the measurements in one or more \
+                navigation_report_instances. The rows and columns of the triangular covariance \
+                matrix relate to the (3) quantities from the first instance, optionally the (3) \
+                quantities from each of the further instances and finally, optionally, time. \
+                This, for instance allows the covariance between rotational attitude and position \
+                to be represented or the covariance between rotational attitude, position, all \
+                their rates of change and time.")
               struct navigation_covariance_type
               {
-                // The content of the triangular covariance matrix omitting symmetric (duplicate)
-                // values. Valid lengths are sum(n=1..*; 3n) and sum(n=1..*; 3n+1). The sequence
-                // starts 6, 10, 21, 28, 45, ...
+                @doc("The content of the triangular covariance matrix omitting symmetric (duplicate) \
+                  values. Valid lengths are sum(n=1..*; 3n) and sum(n=1..*; 3n+1). The sequence \
+                  starts 6, 10, 21, 28, 45, ...")
                 navigation_covariance_value_type value;
-                // Whether time is included in the covariance - it is always represented in the last
-                // row and column.
+                @doc("Whether time is included in the covariance - it is always represented in the last \
+                    row and column.")
                 boolean include_time;
-                // The set of key values for the navigation report instances that the covariance
-                // refers to
+                @doc("The set of key values for the navigation report instances that the covariance \
+                    refers to")
                 navigation_covariance_report_id_type report_id;
               };
-#ifndef DDS_XTYPES
-#pragma keylist navigation_covariance_type
-#endif
-
             };
           };
         };

@@ -20,103 +20,53 @@ module org
         module Navigation_Domain
         {
 
-          // This package contains classes to model of the depth of water the platform may be
-          // in. 
+          @doc("This package contains classes to model of the depth of water the platform may be \
+            in. ")
           module Depth
           {
 
-            // Measured positive down in metres. c.f. altitude_coordinate_type in OARIS
-            // Common_Types package.
+            @doc("Measured positive down in metres. c.f. altitude_coordinate_type in OARIS \
+                Common_Types package.")
             typedef double depth_coordinate_type;
 
-            // a simple union type, to represent an optional value
-            union depth_report_keel_depth_type switch (boolean)
-            {
-            // the value when present
-            case TRUE : depth_coordinate_type value;
-            };
-
-            // a simple union type, to represent an optional value
-            union depth_report_depth_below_keel_type switch (boolean)
-            {
-            // the value when present
-            case TRUE : depth_coordinate_type value;
-            };
-
-            // a simple union type, to represent an optional value
-            union depth_report_water_depth_type switch (boolean)
-            {
-            // the value when present
-            case TRUE : depth_coordinate_type value;
-            };
-
-            // a simple union type, to represent an optional value
-            union depth_accuracy_keel_depth_type switch (boolean)
-            {
-            // the value when present
-            case TRUE : depth_coordinate_type value;
-            };
-
-            // a simple union type, to represent an optional value
-            union depth_accuracy_depth_below_keel_type switch (boolean)
-            {
-            // the value when present
-            case TRUE : depth_coordinate_type value;
-            };
-
-            // a simple union type, to represent an optional value
-            union depth_accuracy_water_depth_type switch (boolean)
-            {
-            // the value when present
-            case TRUE : depth_coordinate_type value;
-            };
-
-            // The accuracy of the platform's depth report
+            @doc("The accuracy of the platform's depth report")
             struct depth_accuracy_type
             {
-              // The provenance or method by which the accuracy values have been derived
+              @doc("The provenance or method by which the accuracy values have been derived")
               org::omg::c4i::Domain_Model::Navigation_Domain::accuracy_derivation_type derivation;
-              // The accuracy (represented as one standard deviation) of the time value.
+              @doc("The accuracy (represented as one standard deviation) of the time value.")
               org::omg::c4i::Domain_Model::Common_Types::Coordinates_and_Positions::duration_type time_accuracy;
-              // The accuracy of the keel depth measurement.
-              depth_accuracy_keel_depth_type keel_depth;
-              // The accuracy of the depth below keel measurement.
-              depth_accuracy_depth_below_keel_type depth_below_keel;
-              // The accuracy of the water depth measurement.
-              depth_accuracy_water_depth_type water_depth;
+              @doc("The accuracy of the keel depth measurement.")
+              @optional depth_coordinate_type keel_depth;
+              @doc("The accuracy of the depth below keel measurement.")
+              @optional depth_coordinate_type depth_below_keel;
+              @doc("The accuracy of the water depth measurement.")
+              @optional depth_coordinate_type water_depth;
             };
 
-            // Used by waterborne craft to report depth information.
+            @doc("Used by waterborne craft to report depth information.")
             struct depth_report_type
             {
-              // The generic type of navigation system used.
+              @doc("The generic type of navigation system used.")
               org::omg::c4i::Domain_Model::Navigation_Domain::navigation_derivation_kind_type system_kind;
-              // An optional set of contributing sensor kinds that have been used to derive the
-              // report. This set is defined when the system_kind is COMPOSITE.
+              @doc("An optional set of contributing sensor kinds that have been used to derive the \
+                report. This set is defined when the system_kind is COMPOSITE.")
               org::omg::c4i::Domain_Model::Navigation_Domain::Reporting::navigation_report_composite_contributors_type composite_contributors;
-              // The specific system employed - e.g. GPS, LORAN-B
+              @doc("The specific system employed - e.g. GPS, LORAN-B")
               org::omg::c4i::Domain_Model::Navigation_Domain::Reporting::navigation_report_specific_system_type specific_system;
-              // Whether the information has been simulated - e.g. for operator training.
-#ifdef DDS_XTYPES
+              @doc("Whether the information has been simulated - e.g. for operator training.")
               @key boolean simulated;
-#else
-              boolean simulated;
-#endif
-              // The time for which the report values are valid.
+              @doc("The time for which the report values are valid.")
               org::omg::c4i::Domain_Model::Common_Types::time_type time_of_information;
-              // The depth of the keel below the surface of the water.
-              depth_report_keel_depth_type keel_depth;
-              // The depth of the bed below the keel.
-              depth_report_depth_below_keel_type depth_below_keel;
-              // The depth of the bed below the water's surface.
-              depth_report_water_depth_type water_depth;
-              // The accuracy of each depth measurement
+              @doc("The depth of the keel below the surface of the water.")
+              @optional depth_coordinate_type keel_depth;
+              @doc("The depth of the bed below the keel.")
+              @optional depth_coordinate_type depth_below_keel;
+              @doc("The depth of the bed below the water's surface.")
+              @optional depth_coordinate_type water_depth;
+              @doc("The accuracy of each depth measurement")
               depth_accuracy_type accuracy;
             };
-#ifndef DDS_XTYPES
-#pragma keylist depth_report_type simulated
-#endif
-
           };
         };
       };
