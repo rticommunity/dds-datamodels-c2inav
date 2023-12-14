@@ -1,0 +1,3 @@
+[submodule "dependencies/dds-datamodels-oaris"]
+	path = dependencies/dds-datamodels-oaris
+	url = https://github.com/rticommunity/dds-datamodels-oaris.git
