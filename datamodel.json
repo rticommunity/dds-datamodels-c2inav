@@ -1,0 +1,16 @@
+{
+   "datamodel": {
+       "name": "C2INAV",
+       "domain": "Defense",
+       "organization": "OMG",
+       "description": "Command and Control Interface for Navigation Systems",
+       "contact": "https://www.omg.org/spec/C2INAV/1.2/Beta1",
+       "purpose": "",
+       "topic": "",
+       "version": "version/1.2-beta1-enhanced",
+       "previous": -1,
+       "compression": "",
+       "enhanced": true,
+       "repository": "https://github.com/rticommunity/dds-datamodels-c2inav"
+   }
+}
