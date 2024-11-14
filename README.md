@@ -1,13 +1,13 @@
 # dds-datamodels-c2inav
 
-This repository implements the OMG® C2INAV 1.2 beta 1 datamodel
+This repository contains the OMG® C2INAV 1.2 beta 1 datamodel
 https://www.omg.org/spec/C2INAV/1.2/Beta1
 
 ## Repo Organization
 
 ### Versioning & Branches
 
-This repository stores the different versions of the OMG® C2INAV datamodel in
+This repository stores different versions of the OMG® C2INAV datamodel in
 different branches. Additionally, it contains `enhanced` versions of the
 original datamodel. This enhanced versions modifies the original datamodel
 including the latest IDL features and other potential improvements. The
